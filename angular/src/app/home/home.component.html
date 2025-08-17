@@ -1,0 +1,37 @@
+<div class="row mb-3">
+  <div class="col-xl-6 col-12 d-flex">
+    <div class="card h-lg-100 w-100 overflow-hidden">
+      <div class="card-body">
+        <div class="starting-content pe-5">
+          @if(!hasLoggedIn){
+          <h3>Welcome</h3>
+          <p class="lead text-muted mb-2">
+            Welcome to the application. 
+          </p>
+          <a (click)="login()" class="px-4 btn btn-primary mb-4" role="button">
+            <i class="fa fa-sign-in"></i>
+            {{ 'AbpAccount::Login' | abpLocalization }}
+          </a>
+          }
+
+          <h4>Giriş yapıldı</h4>
+          <p class="lead text-muted mb-2">Hoşgeldiniz</p>
+          
+          <!-- ChatBot butonu-->
+          <a routerLink="/chat" class="btn btn-outline-primary mb-3">
+            Chat Sayfasına Git
+          </a>
+          <a routerLink="/chat-context" class="btn btn-outline-warning mb-3">
+            ChatContext Sayfası
+          </a>
+              <img
+              style="margin-bottom: -24px"
+              class="w-100 mt-auto"
+              src="assets/images/getting-started/img-support.png"
+            />
+        </div>
+        <img class="card-bg-image" src="assets/images/getting-started/bg-01.png" />
+      </div>
+    </div>
+  </div>
+</div>

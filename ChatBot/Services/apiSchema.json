@@ -1,0 +1,448 @@
+[
+    {
+        "name": "authentication",
+        "path": "/connect/token",
+        "method": "POST",
+        "description": "Client Id ve Secret değerleri üye işyeri bazında değişiklik gösterir ve istek sonrası dönen Access Token ile birlikte yapılan istekler üye işyeri ile yetkilendirilir",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "clientId": {
+                    "type": "string",
+                    "description": "Üye işyerine özel verilen Client Id değeri"
+                },
+                "clientSecret": {
+                    "type": "string",
+                    "description": "Üye işyerine özel verilen Client Secret değeri"
+                },
+                "grantType": {
+                    "type": "string",
+                    "description": "Kimlik doğrulama şemasını belirtir (genellikle 'client_credentials')"
+                },
+                "scope": {
+                    "type": "string",
+                    "description": "Erişim kapsamı (örn: MerchantPortal)"
+                }
+            },
+            "required":["clientId", "clientSecret", "grantType", "scope"]
+        }
+    },
+    {
+        "name": "installments",
+        "path": "/api/app/payments/installments",
+        "method": "GET",
+        "description": "Kart bilgisi ve işlem detaylarına göre geçerli taksit seçeneklerini getirir",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "creditCardNumber": {
+                "type": "string",
+                "description": "Kredi kartı numarası"
+                },
+                "amount": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "description": "İşlem tutarı"
+                },
+                "currencyCode": {
+                    "type": "integer",
+                    "description": "TRY=0, USD=1, EUR=2, GBP=3, ARS=4, BRL=5, CNY=6, AED=7, IQD=8",
+                    "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                },
+                "commissionBy": {
+                    "type": "integer",
+                    "description": "Komisyon ödeme şekli (0: Müşteri öder, 1: Üye işyeri öder)",
+                    "enum": [0, 1]
+                },
+                "isRecurring": {
+                    "type": "boolean",
+                    "description": "Tekrarlayan ödeme mi?"
+                }
+            },
+            "required": ["creditCardNumber", "amount", "currencyCode", "commissionBy", "isRecurring"]
+        }
+    },
+    {
+        "name": "creatPayment",
+        "path": "/api/app/payments/create-payment",
+        "method": "POST",
+        "description": "Yeni bir ödeme işlemi oluşturur",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "description": "İşlem tutarı"
+                },
+                "installment": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Taksit sayısı"
+                },
+                "currency": {
+                    "type": "integer",
+                    "enum":[0, 1, 2, 3, 4, 5, 6, 7, 8],
+                    "description": "TRY=0, USD=1, EUR=2, GBP=3, ARS=4, BRL=5, CNY=6, AED=7, IQD=8"
+                },
+                "cardHolderName": {
+                    "type": "string",
+                    "description": "Kart sahibinin adı soyadı"
+                },
+                "cardNumber": {
+                    "type":"string",
+                    "minimumLenght": 1,
+                    "description": "Kredi/banka kartı numarası"
+                },
+                "saveCard": {
+                    "type": "boolean",
+                    "description": "Kartın kaydedilip kaydedilmeyeceği bilgisi"
+                },
+                "expireYear": {
+                    "type": "string",
+                    "description": "Kartın son kullanma yılı"
+                },
+                "expireMonth": {
+                    "type": "string",
+                    "description": "Kartın son kullanma ayı"
+                },
+                "cvv": {
+                    "type": "string",
+                    "description": "Kartın güvenlik kodu (CVV/CVC)"
+                },
+                "invoiceNumber": {
+                    "type": "string",
+                    "description": "Fatura numarası"
+                },
+                "invoiceDescription": {
+                    "type": "string",
+                    "description": "Far"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Müşteri adı"
+                },
+                "surname": {
+                    "type": "string",
+                    "description": "Müşteri soyadı"
+                },
+                "commissionBy": {
+                    "type": "integer",
+                    "enum": [0, 1],
+                    "description": "Merchant = 0, User = 1"
+                },
+                "transactionType": {
+                    "type": "integer",
+                    "enum": [0, 1, 2],
+                    "description": "Auth = 0, PreAuth = 1, PostAuth = 2"
+                },
+                "billAddress1": {
+                    "type": "string",
+                    "description": "Fatura adresi satır 1"
+                },
+                "billAddress2": {
+                    "type": "string",
+                    "description": "Fatura adresi satır 2"
+                },
+                "billCity": {
+                    "type": "string",
+                    "description": "Fatura şehri"
+                },
+                "billPostalCode": {
+                    "type": "string",
+                    "description": "Fatura posta kodu"
+                },
+                "billState": {
+                    "type": "string",
+                    "description": "Fatura bölgesi/eyaleti"
+                },
+                "billCountry": {
+                    "type": "string",
+                    "description": "Fatura ülkesi"
+                },
+                "billEmail": {
+                    "type": "string",
+                    "description": "Fatura e-posta adresi"
+                },
+                "billPhone": {
+                    "type": "string",
+                    "description": "Fatura telefon numarası"
+                },
+                "orderType": {
+                    "type": "integer",
+                    "description": "Sipariş tipi"
+                },
+                "recurringPaymentNumber": {
+                    "type": "integer",
+                    "description": "Tekrarlayan ödeme numarası"
+                },
+                "recurringPaymentCycle": {
+                    "type": "string",
+                    "description": "Tekrarlayan ödeme döngüsü"
+                },
+                "recurringPaymentInterval": {
+                    "type": "string",
+                    "description": "Tekrarlayan ödeme aralığı"
+                },
+                "recurringPaymentWebHookKey": {
+                    "type": "string",
+                    "description": "Tekrarlayan ödeme webhook anahtarı"
+                }
+            },
+            "required":["amount", "cardNumber"]
+        }
+    },
+    {
+        "name": "checkStatus",
+        "path": "/api/app/payments/check-status",
+        "method": "GET",
+        "description": "Ödeme durumunu kontrol eder",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "invoiceNumber": {
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "Fatura numarası veya Satıcı sipariş kimliği (MerchantOrderId)"
+                },
+                "includePendingStatus": {
+                    "type": "boolean",
+                    "description": "Bekleyen (Pending) durumların dahil et"
+                }
+            },
+            "required":["invoiceNumber"]
+        }
+    },
+    {
+        "name": "confirm",
+        "path": "/api/app/payments/confirm",
+        "method": "POST",
+        "description": "Ön otorizasyon işlemini kapama veya iptal eder",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "invoiceId": {
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "İşlem yapılacak fatura kimlik numarası"
+                },
+                "status": {
+                    "type": "integer",
+                    "enum":[0,1],
+                    "description": "Confirm = 0, Cancel = 1"
+                },
+                "amount": {
+                    "type": "number",
+                    "description": "İşlem tutarı, kısmi kapama için kullanılır"
+                }
+            },
+            "required":["invoiceId"]
+        }
+    },
+    {
+        "name": "Secure3D",
+        "path": "/api/app/payments/3d/init",
+        "method": "POST",
+        "description": "3D Secure ödeme işlemini başlatır",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "amount" :{
+                    "type": "number",
+                    "minimum": 0.01,
+                    "description": "İşlem tutarı"
+                },
+                "installment" :{
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Taksit sayısı. Varsayılan değeri 1'dir"
+                },
+                "currency" :{
+                    "type": "integer",
+                    "description": "TRY=0, USD=1, EUR=2, GBP=3, ARS=4, BRL=5, CNY=6, AED=7, IQD=8",
+                    "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                },
+                "cardHolderName" :{
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "Kart sahibinin adı soyadı"
+                },
+                "cardNumber" :{
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "Kredi/banka kartı numarası"
+                },
+                "saveCard" :{
+                    "type": "boolean",
+                    "description": "Kartın kaydedilip kaydedilmeyeceği bilgisi"
+                },
+                "expireYear" :{
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "Kartın son kullanma yılı"
+                },
+                "expireMonth" :{
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "Kartın son kullanma ayı"
+                },
+                "cvv" :{
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "Kartın güvenlik kodu (CVV/CVC)"
+                },
+                "invoiceNumber" :{
+                    "type": "string",
+                    "description": "Fatura/Sipariş numarası (MerchantOrderId)"
+                },
+                "invoiceDescription" :{
+                    "type": "string",
+                    "description": "Fatura açıklaması"
+                }
+                ,
+                "name" :{
+                    "type": "string",
+                    "description": "Müşteri adı"
+                },
+                "surname" :{
+                    "type": "string",
+                    "description": "Müşteri soyadı"
+                },
+                "commissionBy" :{
+                    "type": "integer",
+                    "description": "Merchant = 0, User = 1",
+                    "enum": [0, 1]
+                },
+                "transactionType" :{
+                    "type": "integer",
+                    "description": "Auth = 0, PreAuth = 1, PostAuth = 2",
+                    "enum": [0, 1, 2]
+                },
+                "billAddress1": {
+                    "type": "string",
+                    "description": "Fatura adresi satır 1"
+                },
+                "billAddress2": {
+                    "type": "string",
+                    "description": "Fatura adresi satır 2"
+                },
+                "billCity": {
+                    "type": "string",
+                    "description": "Fatura şehri"
+                },
+                "billPostalCode": {
+                    "type": "string",
+                    "description": "Fatura posta kodu"
+                },
+                "billState": {
+                    "type": "string",
+                    "description": "Fatura bölgesi/eyaleti"
+                },
+                "billCountry": {
+                    "type": "string",
+                    "description": "Fatura ülkesi"
+                },
+                "billEmail": {
+                    "type": "string",
+                    "description": "Fatura e-posta adresi"
+                },
+                "billPhone": {
+                    "type": "string",
+                    "description": "Fatura telefon numarası"
+                },
+                "orderType": {
+                    "type": "integer",
+                    "description": "Sipariş tipi"
+                },
+                "recurringPaymentNumber": {
+                    "type": "integer",
+                    "description": "Tekrarlayan ödeme numarası"
+                },
+                "recurringPaymentCycle": {
+                    "type": "string",
+                    "description": "Tekrarlayan ödeme döngüsü"
+                },
+                "recurringPaymentInterval": {
+                    "type": "string",
+                    "description": "Tekrarlayan ödeme aralığı"
+                },
+                "recurringPaymentWebHookKey": {
+                    "type": "string",
+                    "description": "Tekrarlayan ödeme webhook anahtarı"
+                }
+            },
+            "required":["amount", "cardHolderName", "cardNumber", "expireYear", "expireMonth", "cvv"]
+        }
+    },
+    {
+        "name": "creatRefundRequest",
+        "path": "/api/app/payments/refund",
+        "method": "POST",
+        "description": "Ödeme için iade talebi oluşturur",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "invoiceNumber" :{
+                    "type": "string",
+                    "minimumLenght": 1,
+                    "description": "İade yapılacak ödemenin fatura numarası"
+                },
+                "amount" :{
+                    "type": "number",
+                    "description": "İade edilecek tutar"
+                }
+            },
+            "required":["invoiceNumber"]
+        }
+    },
+    {
+        "name": "checkout",
+        "path": "/api/app/checkout-sessions",
+        "method": "POST",
+        "description": "Checkout Session API, üye işyerlerinin ödeme formunu kendi web sitelerinde entegre etmelerine olanak tanır. Bu API ile bir ödeme oturumu başlatabilir ve kullanıcılarınızı ödeme formuna yönlendirebilirsiniz. Ödeme formu bir modal veya yeni sekme içinde görüntülenebilir.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "amount" :{
+                    "type": "integer",
+                    "description": "İşlem tutarı"
+                },
+                "currency" :{
+                    "type": "integer",
+                    "enum": [0,1,2,3,4,5,6,7,8],
+                    "description": "Para birimi. Try=0, Usd=1, Eur=2, Gbp=3, Ars=4, Brl=5, Cny=6, Aed=7, Iqd=8"
+                },
+                "installment" :{
+                    "type": "integer",
+                    "description": "Taksit sayısı"
+                },
+                "maxInstallment" :{
+                    "type": "integer",
+                    "description": "İzin verilen maksimum taksit sayısı"
+                },
+                "successUrl" :{
+                    "type": "string",
+                    "description": "Başarılı ödeme sonrası yönlendirilecek URL"
+                },
+                "cancelUrl" :{
+                    "type": "string",
+                    "description": "İptal edilen ödeme sonrası yönlendirilecek URL"
+                },
+                "productName" :{
+                    "type": "string",
+                    "description": "Ürün/hizmet adı"
+                },
+                "phoneNumber" :{
+                    "type": "string",
+                    "description": "Müşteri telefon numarası"
+                },
+                "emailAddress" :{
+                    "type": "string",
+                    "description": "Müşteri e-posta adresi"
+                }
+                
+            },
+            "required":["amount", "currency", "installment", "maxInstallment", "successUrl", "cancelUrl"]
+        }
+    }
+]

@@ -1,0 +1,10 @@
+<div class="chat-box">
+  <div *ngFor="let msg of messages" class="message" [ngClass]="msg.role">
+    <strong>{{ msg.role }}:</strong> {{ msg.message }}
+  </div>
+
+  <form (ngSubmit)="sendMessage()"  method="post">
+    <input [(ngModel)]="userInput" name="userInput" required placeholder="Mesajınızı yazın..." />
+    <button type="submit">Gönder</button>
+  </form>
+</div>

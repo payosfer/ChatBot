@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "name": "my-app",
+  "private": true,
+  "dependencies": {
+    "@abp/aspnetcore.mvc.ui.theme.leptonxlite": "~4.2.0",
+    "@chroma-core/default-embed": "^0.1.8",
+    "chromadb": "^3.0.9"
+  }
+}

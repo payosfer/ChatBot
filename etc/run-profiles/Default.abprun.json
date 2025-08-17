@@ -1,0 +1,23 @@
+﻿{
+  "applications": {
+    "ChatBot.Angular": {
+      "type": "cli",
+      "workingDirectory": "../../angular",
+      "startCommand": "./start.ps1",
+      "launchUrl": "http://localhost:4200",
+      "execution": {
+        "order": 0
+      }
+    },
+    "ChatBot": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44332",
+      "healthCheckEndpoint": "/health-status",
+      "healthUiEndpoint": "/health-ui",
+      "path": "../../ChatBot/ChatBot.csproj",
+      "execution": {
+        "order": 1
+      }
+    }
+  }
+}

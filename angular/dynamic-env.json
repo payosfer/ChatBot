@@ -1,0 +1,21 @@
+{
+  "production": true,
+  "application": {
+    "baseUrl":"https://chatbot-web",
+    "name": "ChatBot",
+    "logoUrl": ""
+  },
+  "oAuthConfig": {
+    "issuer": "https://chatbot-api/",
+    "redirectUri": "https://chatbot",
+    "clientId": "ChatBot_App",
+    "responseType": "code",
+    "scope": "offline_access openid profile email phone"
+  },
+  "apis": {
+    "default": {
+      "url": "https://chatbot-api",
+      "rootNamespace": "ChatBot"
+    }
+  }
+}
