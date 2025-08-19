@@ -103,9 +103,9 @@ namespace ChatBot.Services
             {
                 var func = new FunctionDefinition
                 {
-                    name = item.GetProperty("name").GetString(),
-                    description = item.GetProperty("description").GetString(),
-                    parameters = item.GetProperty("parameters").Clone() 
+                    Name = item.GetProperty("name").GetString(),
+                    Description = item.GetProperty("description").GetString(),
+                    Parameters = item.GetProperty("parameters").Clone() 
                 };
 
                 functionList.Add(func);

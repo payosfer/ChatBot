@@ -7,6 +7,7 @@ using Qdrant.Client;
 using Qdrant.Client.Grpc;
 using Volo.Abp.Modularity;
 using System.Net.Http;
+using System.Diagnostics;
 
 public class LLMService : ILLMService
 {
@@ -14,6 +15,8 @@ public class LLMService : ILLMService
     private readonly ICurrentUser _currentUser;
     private readonly IEmbedding _embedding;
     private readonly QdrantClient _qdrantClient;
+    
+    private readonly Stopwatch _stopwatch;  // Stopwatch için private field
 
 
     public LLMService(
@@ -24,8 +27,8 @@ public class LLMService : ILLMService
         _clientFactory = clientFactory;
         _currentUser = currentUser;
         _embedding = embedding;
-        _qdrantClient = new QdrantClient("localhost" ,6334, apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.bsszKREkccZRdGmdrYICCL0X4Xh90Hd3C_-I42y8S5E"); // Qdrant'ın varsayılan portu
-
+        _qdrantClient = new QdrantClient("localhost", 6334, apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.bsszKREkccZRdGmdrYICCL0X4Xh90Hd3C_-I42y8S5E"); // Qdrant'ın varsayılan portu
+        Stopwatch _stopwatch = new Stopwatch();        // Stopwatch'ı başlatmak için
     }
 
     public async Task<string> GenerateCompletionAsync(ChatRequestDto input,LLMProvider provider, CancellationToken cancellationToken = default)
@@ -64,8 +67,13 @@ public class LLMService : ILLMService
 
         Console.WriteLine($"🔍 Sorgu sonucu: {entry[0].Payload["message"]}");
 
+
+    _stopwatch.Start();
         // 3. Prompt hazırla ve modeli çalıştır
         var result = await client.GenerateResponseAsync(input.Message, entry, cancellationToken);
+    _stopwatch.Stop();
+    Console.WriteLine($"🕒 Model çalıştırma süresi: {_stopwatch.Elapsed}");
+
 
         // 4. Sonucu döndür
         Console.WriteLine($"🤖 OpenAI cevabı: {result}");
