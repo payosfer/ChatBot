@@ -1,14 +1,20 @@
 <div class="chat-box">
-  <div *ngFor="let msg of messages" class="message" [ngClass]="msg.role">
-    <strong>{{ msg.role }}:</strong> {{ msg.message }}
+  <!-- Mesajların gösterileceği kaydırılabilir alan -->
+  <div class="message-container">
+    <div *ngFor="let msg of messages" class="message" [ngClass]="msg.role">
+      <strong>{{ msg.role }}:</strong> {{ msg.message }}
+    </div>
   </div>
 
-  <form (ngSubmit)="sendMessage()" method="post">
-    <input [(ngModel)]="userInput" name="userInput" required placeholder="Buraya yazınız..." />
-    <select [(ngModel)]="selectedModel" name="selectedModel">
-      <option value="OpenAI">gpt-3.5-turbo</option>
-      <option value="DeepSeek">deepseek</option>
-    </select>
-    <button type="submit">Gönder</button>
-  </form>
+  <!-- Sabit form alanı -->
+  <div class="input-container">
+    <form (ngSubmit)="sendMessage()" method="post"> 
+      <input [(ngModel)]="userInput" name="userInput" required placeholder="Buraya yazınız..." />
+      <select [(ngModel)]="selectedModel" name="selectedModel">
+        <option value="OpenAI">gpt-3.5-turbo</option>
+        <option value="DeepSeek">deepseek</option>
+      </select>
+      <button type="submit">Gönder</button>
+    </form>
+  </div>
 </div>

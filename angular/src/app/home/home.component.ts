@@ -1,5 +1,6 @@
 import { AuthService } from '@abp/ng.core';
 import { Component } from '@angular/core';
+
  
 @Component({
   standalone: false,
@@ -11,6 +12,9 @@ export class HomeComponent {
   get hasLoggedIn(): boolean {
     return this.authService.isAuthenticated;
   }
+
+  
+  isChatbotOpen = false;
 
   constructor(private authService: AuthService) {
     

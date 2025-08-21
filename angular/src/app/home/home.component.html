@@ -18,6 +18,9 @@
           <p class="lead text-muted mb-2">Hoşgeldiniz</p>
           
           <!-- ChatBot butonu-->
+          
+          
+          <!-- ChatBot butonu-->
           <a routerLink="/chat" class="btn btn-outline-primary mb-3">
             Chat Sayfasına Git
           </a>
@@ -35,3 +38,13 @@
     </div>
   </div>
 </div>
+
+<button class="chatbot-toggle-button" (click)="isChatbotOpen = !isChatbotOpen">
+  <i class="fas fa-comment"></i>
+</button>
+
+@if (isChatbotOpen) {
+  <div class="chatbot-container">
+    <app-chat-context></app-chat-context>
+  </div>
+}
